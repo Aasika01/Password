@@ -1,0 +1,38 @@
+{
+  "name": "password-reset-app",
+  "version": "1.0.0",
+  "description": "Password reset application with email OTP verification",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "build": "npm run build --prefix client",
+    "install-client": "npm install --prefix client"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "password-reset",
+    "otp",
+    "email",
+    "authentication",
+    "security"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
