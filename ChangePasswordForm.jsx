@@ -7,6 +7,7 @@ const Eye = ({ className }) => (
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       strokeLinecap="round"
@@ -29,6 +30,7 @@ const EyeOff = ({ className }) => (
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       strokeLinecap="round"
@@ -45,6 +47,7 @@ const Lock = ({ className }) => (
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       strokeLinecap="round"
@@ -61,12 +64,30 @@ const CheckCircle = ({ className }) => (
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
       d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
+
+const XCircle = ({ className }) => (
+  <svg
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
     />
   </svg>
 );
@@ -107,18 +128,41 @@ const PasswordStrengthIndicator = ({ password }) => {
     },
   ];
 
+  const getProgressBarColor = () => {
+    switch (strength.color) {
+      case "red":
+        return "bg-red-500";
+      case "yellow":
+        return "bg-yellow-500";
+      case "purple":
+        return "bg-purple-500";
+      case "green":
+        return "bg-green-500";
+      default:
+        return "bg-gray-300";
+    }
+  };
+
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-3">
         <span className="text-sm font-medium text-gray-700">
           Password Strength
         </span>
-        <span className="text-sm text-gray-500">{strength.label}</span>
+        <span className={`text-sm font-medium ${
+          strength.color === "gray" ? "text-gray-500" :
+          strength.color === "red" ? "text-red-600" :
+          strength.color === "yellow" ? "text-yellow-600" :
+          strength.color === "purple" ? "text-purple-600" :
+          "text-green-600"
+        }`}>
+          {strength.label}
+        </span>
       </div>
 
       <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
         <div
-          className="h-2 rounded-full bg-gray-300 transition-all duration-300"
+          className={`h-2 rounded-full transition-all duration-300 ${getProgressBarColor()}`}
           style={{ width: `${(strength.score / 5) * 100}%` }}
         ></div>
       </div>
@@ -254,18 +298,20 @@ const ChangePasswordForm = () => {
             <div
               className={`mb-6 p-4 rounded-lg flex items-center border ${
                 messageType === "success"
-                  ? "bg-green-50 border-green-200 text-green-800"
-                  : "bg-red-50 border-red-200 text-red-800"
+                  ? "bg-green-50 border-green-200"
+                  : "bg-red-50 border-red-200"
               }`}
             >
               {messageType === "success" ? (
-                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0 text-green-600" />
               ) : (
-                <div className="w-5 h-5 mr-3 flex-shrink-0 rounded-full border-2 border-red-500 flex items-center justify-center">
-                  <span className="text-red-500 text-xs">!</span>
-                </div>
+                <XCircle className="w-5 h-5 mr-3 flex-shrink-0 text-red-600" />
               )}
-              <span className="text-sm">{message}</span>
+              <span className={`text-sm ${
+                messageType === "success" ? "text-green-800" : "text-red-800"
+              }`}>
+                {message}
+              </span>
             </div>
           )}
 
